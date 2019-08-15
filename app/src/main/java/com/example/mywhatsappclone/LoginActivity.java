@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                                 userMap.put("name",user.getPhoneNumber());
                                 reference.updateChildren(userMap);
                             }
+                            userIsLogin();
                         }
 
                         @Override
@@ -103,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                     });
                 }
             }
-                userIsLogin();
+
         });
     }
 

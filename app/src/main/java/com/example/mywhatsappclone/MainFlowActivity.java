@@ -5,12 +5,25 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 
+import com.example.mywhatsappclone.chat.ChatAdapter;
+import com.example.mywhatsappclone.chat.ChatItem;
+import com.example.mywhatsappclone.user.UserAdapter;
+import com.example.mywhatsappclone.user.UserItem;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
 
 public class MainFlowActivity extends AppCompatActivity {
     private Button logout,findUser;
+    private RecyclerView recView;
+    private RecyclerView.Adapter adapter;
+
+    private ArrayList<ChatItem> chatList =new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,11 +44,20 @@ public class MainFlowActivity extends AppCompatActivity {
             return;
         });
         checkPermission();
+        instantiateRecyclerView();
     }
+
+    private void instantiateRecyclerView() {
+        recView=findViewById(R.id.recyler_view);
+        recView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recView.setAdapter(adapter=new ChatAdapter(chatList));
+    }
+
     private void checkPermission()
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.WRITE_CONTACTS,Manifest.permission.READ_CONTACTS},0);
         }
     }
+
 }

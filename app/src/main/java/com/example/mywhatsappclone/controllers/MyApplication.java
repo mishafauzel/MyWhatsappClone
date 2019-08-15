@@ -1,4 +1,4 @@
-package com.example.mywhatsappclone;
+package com.example.mywhatsappclone.controllers;
 
 import android.app.Application;
 
