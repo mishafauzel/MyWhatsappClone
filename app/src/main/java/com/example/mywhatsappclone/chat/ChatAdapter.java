@@ -1,5 +1,6 @@
 package com.example.mywhatsappclone.chat;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -9,8 +10,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.mywhatsappclone.MessagingActivity;
 import com.example.mywhatsappclone.R;
 import com.example.mywhatsappclone.user.UserItem;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -51,6 +56,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             title.setText(chatItem.getChatId());
             layout.setOnClickListener((view)->
             {
+                Intent intent=new Intent(view.getContext().getApplicationContext(), MessagingActivity.class);
+                intent.putExtra("chatId",chatItem.getChatId());
+                view.getContext().startActivity(intent);
 
             });
         }

@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+
     <application
         android:name=".controllers.MyApplication"
         android:allowBackup="true"
@@ -15,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MessagingActivity"></activity>
         <activity android:name=".FindUserActivity" />
         <activity android:name=".MainFlowActivity" />
         <activity android:name=".LoginActivity">

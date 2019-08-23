@@ -10,7 +10,7 @@
 
     <EditText
         android:id="@+id/phone_number"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Please enter your phone"
@@ -20,7 +20,7 @@
 
     <EditText
         android:id="@+id/code"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Please, enter the code"
@@ -32,4 +32,5 @@
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:text="Sent code" />
+
 </LinearLayout>

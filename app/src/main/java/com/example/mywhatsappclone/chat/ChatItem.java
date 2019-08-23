@@ -1,13 +1,12 @@
 package com.example.mywhatsappclone.chat;
 
 public class ChatItem {
-    private String chatId;
+  String name;
 
-    public String getChatId() {
-        return chatId;
-    }
+    public String getChatId()
+    {return name;}
 
-    public ChatItem(String chatId) {
-        this.chatId = chatId;
+    public ChatItem(String name) {
+        this.name = name;
     }
 }

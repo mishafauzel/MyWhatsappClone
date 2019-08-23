@@ -3,6 +3,7 @@ package com.example.mywhatsappclone;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +12,15 @@ import android.widget.Button;
 
 import com.example.mywhatsappclone.chat.ChatAdapter;
 import com.example.mywhatsappclone.chat.ChatItem;
+import com.example.mywhatsappclone.chat.ChatItem;
 import com.example.mywhatsappclone.user.UserAdapter;
 import com.example.mywhatsappclone.user.UserItem;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -45,6 +52,38 @@ public class MainFlowActivity extends AppCompatActivity {
         });
         checkPermission();
         instantiateRecyclerView();
+        getUserChats();
+    }
+
+    private void getUserChats() {
+        DatabaseReference database=FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).child("chat");
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                {
+                    for (DataSnapshot datasnaphot:
+                         dataSnapshot.getChildren()) {
+                        boolean existsInArray=false;
+                        String key=datasnaphot.getKey();
+                        for ( ChatItem item:
+                           chatList  ) {
+                            if(existsInArray=key.equals(item.getChatId()))
+                                break;
+                        }
+                        if(existsInArray)
+                            continue;
+                        chatList.add(new ChatItem(key));
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void instantiateRecyclerView() {
@@ -56,7 +95,7 @@ public class MainFlowActivity extends AppCompatActivity {
     private void checkPermission()
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_CONTACTS,Manifest.permission.READ_CONTACTS},0);
+            requestPermissions(new String[]{Manifest.permission.WRITE_CONTACTS,Manifest.permission.READ_CONTACTS,Manifest.permission.READ_EXTERNAL_STORAGE},0);
         }
     }
 
