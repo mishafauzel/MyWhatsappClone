@@ -16,11 +16,13 @@ import com.example.mywhatsappclone.chat.ChatItem;
 import com.example.mywhatsappclone.user.UserAdapter;
 import com.example.mywhatsappclone.user.UserItem;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.onesignal.OneSignal;
 
 import java.util.ArrayList;
 
@@ -35,9 +37,18 @@ public class MainFlowActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_flow);
+
+        OneSignal.startInit(this).init();
+        OneSignal.setSubscription(true);
+        OneSignal.idsAvailable((userId, registrationId) -> {
+            FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).child("notificationId").setValue(userId);
+        });
+
+
         findUser=findViewById(R.id.find_user);
         logout=findViewById(R.id.logout);
-        logout.setOnClickListener((view)->{
+
+                logout.setOnClickListener((view)->{
             FirebaseAuth.getInstance().signOut();
             Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
