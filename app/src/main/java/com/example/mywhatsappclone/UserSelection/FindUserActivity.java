@@ -1,4 +1,4 @@
-package com.example.mywhatsappclone;
+package com.example.mywhatsappclone.UserSelection;
 
 import android.database.Cursor;
 import android.provider.ContactsContract;
@@ -7,12 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.example.mywhatsappclone.user.UserAdapter;
-import com.example.mywhatsappclone.user.UserItem;
+import com.example.mywhatsappclone.R;
+import com.example.mywhatsappclone.UserSelection.user.UserAdapter;
+import com.example.mywhatsappclone.UserSelection.user.UserItem;
 import com.example.mywhatsappclone.utills.Iso2Phone;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -10,6 +10,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         FirebaseApp.initializeApp(this);
-        Fresco.initialize(this);
+
     }
 }

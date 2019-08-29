@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MyWhatsappClone</string>
+    <string name="log_out">Log out</string>
+    <string name="cannot_login">Ooops! Something went wrong!</string>
+    <string name="send_code">Send code</string>
+    <string name="verify_code">Verify code</string>
+    <string name="please_enter_your_phone">Please, enter your phone</string>
+    <string name="please_enter_verification_code">Please, enter the code</string>
 </resources>

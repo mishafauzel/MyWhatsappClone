@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout>
+    <data>
+        <variable
+            name="chatViewModel"
+            type="com.example.mywhatsappclone.chatting.chats.ChatViewModel" />
+    </data>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFlowActivity"
+    tools:context=".chatting.chats.MainFlowActivity"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/find_user"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/find_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="Find User" />
-
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="logout" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:clickable="true"
+        android:layout_margin="8dp"
+        android:onClick="@{chatViewModel::executeFindUser}"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</LinearLayout>
+</FrameLayout>
+</layout>

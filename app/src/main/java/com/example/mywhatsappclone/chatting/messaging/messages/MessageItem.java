@@ -1,4 +1,4 @@
-package com.example.mywhatsappclone.chat;
+package com.example.mywhatsappclone.chatting.messaging.messages;
 
 import android.support.annotation.Nullable;
 

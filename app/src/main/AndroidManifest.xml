@@ -16,10 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MessagingActivity"></activity>
-        <activity android:name=".FindUserActivity" />
-        <activity android:name=".MainFlowActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".chatting.messaging.MessagingActivity"></activity>
+        <activity android:name=".UserSelection.FindUserActivity" />
+        <activity android:name=".chatting.chats.MainFlowActivity" />
+        <activity android:name=".Login.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

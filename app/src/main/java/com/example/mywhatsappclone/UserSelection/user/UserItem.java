@@ -1,7 +1,15 @@
-package com.example.mywhatsappclone.user;
+package com.example.mywhatsappclone.UserSelection.user;
 
-public class UserItem {
+import java.io.Serializable;
+
+public class UserItem implements Serializable {
     private String name,phone,uid;
+    private String notificationKey;
+
+    public UserItem(String uid) {
+        this.uid=uid;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -28,5 +36,13 @@ public class UserItem {
 
     public String getUid() {
         return uid;
+    }
+
+    public void setNotificationKey(String notificationKey) {
+        this.notificationKey = notificationKey;
+    }
+
+    public String getNotificationKey() {
+        return notificationKey;
     }
 }

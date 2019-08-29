@@ -1,10 +1,11 @@
-package com.example.mywhatsappclone.chat;
+package com.example.mywhatsappclone.chatting.messaging.messages;
 
+import android.arch.paging.PagedListAdapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +19,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
+public class MessageAdapter extends PagedListAdapter<MessageItem,MessageAdapter.MessageViewHolder> {
     ArrayList<MessageItem> messageList;
     private Context context;
     private Picasso picasso;
-    public MessageAdapter(ArrayList<MessageItem> messageList) {
-        this.messageList=messageList;
-        picasso=Picasso.get();
-    }
 
+    public MessageAdapter(@NonNull DiffUtil.ItemCallback<MessageItem> diffCallback) {
+        super(diffCallback);
+    }
 
     @NonNull
     @Override
@@ -72,9 +72,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 if((sizeDifference=item.mediaUrlList.size()-imageViewList.size())>0)
                     for(int i=0;i<sizeDifference;i++)
                     {
-                        ImageView mImView;
-                        mediaLinearLayout.addView(mImView=new ImageView(context));
-                        imageViewList.add(mImView);
+                        ImageView mImViewnew= new ImageView(context);
+                        mImViewnew.setLayoutParams(new LinearLayout.LayoutParams(100,100));
+
+
+                        mediaLinearLayout.addView(mImViewnew);
+                        imageViewList.add(mImViewnew);
                     }
                 else
                     if(sizeDifference<0)
@@ -85,7 +88,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 int listIterator=0;
                 for (String url:item.mediaUrlList
                      ) {
-                    picasso.load(url).into(imageViewList.get(listIterator));
+                    picasso.load(url).fit().into(imageViewList.get(listIterator));
                     imageViewList.get(listIterator).setVisibility(View.VISIBLE);
                     final int startPosition=listIterator;
                     imageViewList.get(listIterator).setOnClickListener((view)->

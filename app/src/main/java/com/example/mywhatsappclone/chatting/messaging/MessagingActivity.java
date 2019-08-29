@@ -1,4 +1,4 @@
-package com.example.mywhatsappclone;
+package com.example.mywhatsappclone.chatting.messaging;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -15,9 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 
-import com.example.mywhatsappclone.chat.MessageAdapter;
-import com.example.mywhatsappclone.chat.MessageItem;
+import com.example.mywhatsappclone.R;
+import com.example.mywhatsappclone.chatting.chats.chat.ChatItem;
+import com.example.mywhatsappclone.chatting.messaging.messages.MessageAdapter;
+import com.example.mywhatsappclone.chatting.messaging.messages.MessageItem;
 import com.example.mywhatsappclone.media.MediaAdapter;
+import com.example.mywhatsappclone.UserSelection.user.UserItem;
+import com.example.mywhatsappclone.utills.SendNotification;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +46,7 @@ public class MessagingActivity extends AppCompatActivity {
     private ImageButton mediaButton;
     FloatingActionButton send;
     EditText message;
-    String chatId;
+    ChatItem chatItem;
 
     private ArrayList<MessageItem> MessageList =new ArrayList<>();
     private ArrayList<String> uriList=new ArrayList<>();
@@ -53,7 +57,7 @@ public class MessagingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
-        chatId=getIntent().getStringExtra("chatId");
+        chatItem=(ChatItem) getIntent().getSerializableExtra("chatObject");
 
         instantiateRecyclerView();
         instantiateMediaRecyclerView();
@@ -97,7 +101,7 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     private void getMessages() {
-        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("chat").child(chatId);
+        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("chat").child(chatItem.getChatId()).child("messages");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -152,7 +156,7 @@ public class MessagingActivity extends AppCompatActivity {
     private void sendMessage() {
 
            mediaIterator=0;
-            DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("chat").child(chatId).push();
+            DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("chat").child(chatItem.getChatId()).push();
 
             Map newMessage=new HashMap();
             newMessage.put("sender",FirebaseAuth.getInstance().getUid());
@@ -165,7 +169,7 @@ public class MessagingActivity extends AppCompatActivity {
                 {
                     String mediaId=databaseReference.child("media").push().getKey();
                     mediaIdList.add(mediaId);
-                    final StorageReference firebaseStorage=FirebaseStorage.getInstance().getReference().child("chat").child(chatId)
+                    final StorageReference firebaseStorage=FirebaseStorage.getInstance().getReference().child("chat").child(chatItem.getChatId())
                             .child(databaseReference.getKey()).child(mediaId);
 
                     UploadTask uploadTask=firebaseStorage.putFile(Uri.parse(mediaUrl));
@@ -195,6 +199,19 @@ public class MessagingActivity extends AppCompatActivity {
         mediaIdList.clear();
         uriList.clear();
         mediaAdapter.notifyDataSetChanged();
+        String myUid=FirebaseAuth.getInstance().getUid();
+        String messageStr;
+        if(updatingMessage.get("text")!=null)
+            messageStr=((String) updatingMessage.get("text"));
+        else
+            messageStr="[media]";
+        for (UserItem item:chatItem.getUserList()) {
+            if(!item.getUid().equals(myUid))
+            {
+                new SendNotification(messageStr,"NewMessage",item.getNotificationKey());
+            }
+
+        }
     }
     private void instantiateRecyclerView() {
         recView=findViewById(R.id.recyler_view);

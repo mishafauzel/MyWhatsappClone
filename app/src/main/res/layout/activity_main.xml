@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="loginViewModel"
+            type="com.example.mywhatsappclone.Login.LoginViewModel" />
+    </data>
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".Login.LoginActivity">
 
+    <fragment
+        android:id="@+id/navHost"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/main_nav"></fragment>
 
     <EditText
         android:id="@+id/phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Please enter your phone"
+        android:text="@={loginViewModel.phoneNumber}"
+        android:hint="@string/please_enter_your_phone"
 
         android:inputType="textShortMessage|phone" />
 
@@ -23,14 +38,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Please, enter the code"
+        android:text="@={loginViewModel.code}"
+
+        android:hint="@string/please_enter_verification_code"
         android:inputType="numberPassword" />
 
     <Button
         android:id="@+id/send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:text="Sent code" />
+        android:onClick="@{loginViewModel.logIn()}"
+        android:text="@{loginViewModel.buttonText}" />
 
 </LinearLayout>
+</layout>
